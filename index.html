@@ -1109,15 +1109,6 @@
             margin-right: 10px;
         }
         
-        /* Image Containers */
-        .img-container {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            border-radius: inherit;
-        }
-        
         /* Responsive Design */
         @media (max-width: 992px) {
             .nav-links {
@@ -1214,7 +1205,7 @@
                         </a>
                     </li>
                 </ul>
-                <button class="mobile-menu-btn">
+                <button class="mobile-menu-btn" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
                 </button>
             </nav>
@@ -1657,7 +1648,7 @@
                 </div>
                 
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1530041539828-114de669390e?ixlib=rb-4.0.3&auto=format&fit=crop&w-1350&q=80');">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1530041539828-114de669390e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
                         <i class="fas fa-users" style="color: white; font-size: 3rem; z-index: 1;"></i>
                     </div>
                     <div class="service-content">
@@ -1716,9 +1707,9 @@
                 <div class="availability-calendar">
                     <h3 style="margin-bottom: 20px; color: var(--dark-slate);">Availability</h3>
                     <div class="calendar-header">
-                        <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <button id="prev-month" type="button"><i class="fas fa-chevron-left"></i></button>
                         <h4 id="current-month">June 2023</h4>
-                        <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                        <button id="next-month" type="button"><i class="fas fa-chevron-right"></i></button>
                     </div>
                     <div class="calendar-grid" id="calendar">
                         <!-- Calendar generated dynamically -->
@@ -1932,7 +1923,7 @@
     <!-- Service Detail Modal -->
     <div class="modal" id="service-modal">
         <div class="modal-content">
-            <button class="close-modal">&times;</button>
+            <button class="close-modal" aria-label="Close modal">&times;</button>
             <div class="modal-header">
                 <h3 id="modal-title">Service Details</h3>
             </div>
@@ -1945,7 +1936,7 @@
     <!-- Subscription Modal -->
     <div class="modal" id="subscription-modal">
         <div class="modal-content">
-            <button class="close-modal">&times;</button>
+            <button class="close-modal" aria-label="Close modal">&times;</button>
             <div class="modal-header">
                 <h3 id="subscription-modal-title">Subscribe Now</h3>
             </div>
@@ -1958,7 +1949,7 @@
     <!-- Success Modal -->
     <div class="modal" id="success-modal">
         <div class="modal-content">
-            <button class="close-modal">&times;</button>
+            <button class="close-modal" aria-label="Close modal">&times;</button>
             <div style="text-align: center; padding: 30px;">
                 <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--sage); margin-bottom: 20px;"></i>
                 <h3 id="success-title" style="color: var(--dark-slate); margin-bottom: 15px;">Success!</h3>
@@ -1982,7 +1973,7 @@
                 {id: 1, icon: 'fas fa-book', name: 'Postpartum Survival Guide', price: 24.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
                 {id: 2, icon: 'fas fa-spa', name: 'Sitz Bath Herbs', price: 18.50, type: 'physical', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
                 {id: 3, icon: 'fas fa-heart', name: 'Newborn Care Toolkit', price: 29.99, type: 'digital', image: 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
-                {id: 4, icon: 'fas fa-mortar-pestle', name: 'Lactation Support Tea', price: 16.99, type: 'physical', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&auto=format&fit=crop&w-1350&q=80'}
+                {id: 4, icon: 'fas fa-mortar-pestle', name: 'Lactation Support Tea', price: 16.99, type: 'physical', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
             ],
             labor: [
                 {id: 5, icon: 'fas fa-toolbox', name: 'Birth Planning Bundle', price: 34.99, type: 'digital', image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
@@ -2152,16 +2143,22 @@
                 }
                 
                 // Close mobile menu
-                navLinksContainer.classList.remove('active');
+                if (navLinksContainer) {
+                    navLinksContainer.classList.remove('active');
+                }
             }
         }
 
         // ========== EVENT LISTENERS SETUP ==========
         function setupEventListeners() {
             // Mobile menu toggle
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinksContainer.classList.toggle('active');
-            });
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    if (navLinksContainer) {
+                        navLinksContainer.classList.toggle('active');
+                    }
+                });
+            }
             
             // Navigation links
             navLinks.forEach(link => {
@@ -2350,22 +2347,30 @@
             }
             
             // Privacy and Terms links
-            document.getElementById('privacy-link')?.addEventListener('click', function(e) {
-                e.preventDefault();
-                showSuccess('Privacy Policy', 'Our privacy policy ensures that your personal information is protected. We never sell your data and only use it to provide you with our services.');
-            });
+            const privacyLink = document.getElementById('privacy-link');
+            if (privacyLink) {
+                privacyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showSuccess('Privacy Policy', 'Our privacy policy ensures that your personal information is protected. We never sell your data and only use it to provide you with our services.');
+                });
+            }
             
-            document.getElementById('terms-link')?.addEventListener('click', function(e) {
-                e.preventDefault();
-                showSuccess('Terms of Service', 'By using our services, you agree to our terms which outline the relationship between Stork Helpers and our clients. Full terms are available upon request.');
-            });
+            const termsLink = document.getElementById('terms-link');
+            if (termsLink) {
+                termsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showSuccess('Terms of Service', 'By using our services, you agree to our terms which outline the relationship between Stork Helpers and our clients. Full terms are available upon request.');
+                });
+            }
         }
 
         // ========== CART FUNCTIONALITY ==========
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            document.querySelectorAll('.cart-count').forEach(el => el.textContent = totalItems);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+                document.querySelectorAll('.cart-count').forEach(el => el.textContent = totalItems);
+            }
         }
 
         function addToCart(productId) {
@@ -2389,21 +2394,31 @@
             }
             
             // Save to localStorage
-            localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            try {
+                localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+            }
             
             // Update UI
             updateCartCount();
             
             // Show notification
-            cartNotification.style.display = 'flex';
-            setTimeout(() => {
-                cartNotification.style.display = 'none';
-            }, 3000);
+            if (cartNotification) {
+                cartNotification.style.display = 'flex';
+                setTimeout(() => {
+                    cartNotification.style.display = 'none';
+                }, 3000);
+            }
         }
 
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
-            localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            try {
+                localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+            }
             updateCartCount();
             loadCart();
         }
@@ -2415,7 +2430,11 @@
                 if (item.quantity < 1) {
                     removeFromCart(productId);
                 } else {
-                    localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+                    try {
+                        localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+                    } catch (e) {
+                        console.error('Error saving to localStorage:', e);
+                    }
                     updateCartCount();
                     loadCart();
                 }
@@ -2426,6 +2445,8 @@
             const cartContent = document.getElementById('cart-content');
             const cartTotal = document.getElementById('cart-total');
             
+            if (!cartContent) return;
+            
             if (cart.length === 0) {
                 cartContent.innerHTML = `
                     <div class="cart-empty" style="text-align: center; padding: 60px 0;">
@@ -2435,7 +2456,7 @@
                         <a href="#shop" class="btn nav-link" data-page="shop">Browse Products</a>
                     </div>
                 `;
-                cartTotal.style.display = 'none';
+                if (cartTotal) cartTotal.style.display = 'none';
                 return;
             }
             
@@ -2458,13 +2479,13 @@
                         </div>
                         <div class="cart-item-controls">
                             <div class="quantity-control">
-                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <button class="quantity-btn" data-action="decrease" data-id="${item.id}">-</button>
                                 <span>${item.quantity}</span>
-                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                <button class="quantity-btn" data-action="increase" data-id="${item.id}">+</button>
                             </div>
                             <div style="text-align: right;">
                                 <p class="product-price">$${itemTotal.toFixed(2)}</p>
-                                <button class="btn btn-small btn-outline" onclick="removeFromCart(${item.id})" style="margin-top: 5px;">Remove</button>
+                                <button class="btn btn-small btn-outline" data-action="remove" data-id="${item.id}" style="margin-top: 5px;">Remove</button>
                             </div>
                         </div>
                     </div>
@@ -2474,20 +2495,50 @@
             html += '</div>';
             cartContent.innerHTML = html;
             
+            // Add event listeners to cart buttons
+            document.querySelectorAll('[data-action="decrease"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    updateQuantity(productId, -1);
+                });
+            });
+            
+            document.querySelectorAll('[data-action="increase"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    updateQuantity(productId, 1);
+                });
+            });
+            
+            document.querySelectorAll('[data-action="remove"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(productId);
+                });
+            });
+            
             // Update total section
             const shipping = 5.99;
             const total = subtotal + shipping;
             
-            document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('cart-shipping').textContent = `$${shipping.toFixed(2)}`;
-            document.getElementById('cart-total-amount').textContent = `$${total.toFixed(2)}`;
+            if (document.getElementById('cart-subtotal')) {
+                document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            }
+            if (document.getElementById('cart-shipping')) {
+                document.getElementById('cart-shipping').textContent = `$${shipping.toFixed(2)}`;
+            }
+            if (document.getElementById('cart-total-amount')) {
+                document.getElementById('cart-total-amount').textContent = `$${total.toFixed(2)}`;
+            }
             
-            cartTotal.style.display = 'block';
+            if (cartTotal) cartTotal.style.display = 'block';
         }
 
         // ========== CHECKOUT FUNCTIONALITY ==========
         function loadCheckout() {
             const checkoutItems = document.getElementById('checkout-items');
+            if (!checkoutItems) return;
+            
             let subtotal = 0;
             let html = '';
             
@@ -2508,15 +2559,23 @@
             const shipping = 5.99;
             const total = subtotal + shipping;
             
-            document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('checkout-shipping').textContent = `$${shipping.toFixed(2)}`;
-            document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
+            if (document.getElementById('checkout-subtotal')) {
+                document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            }
+            if (document.getElementById('checkout-shipping')) {
+                document.getElementById('checkout-shipping').textContent = `$${shipping.toFixed(2)}`;
+            }
+            if (document.getElementById('checkout-total')) {
+                document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
+            }
         }
 
         // ========== DYNAMIC SIDEBAR ==========
         function updateSidebar(category) {
             const products = productData[category] || productData.all;
             const sidebarContent = document.getElementById('sidebar-content');
+            if (!sidebarContent) return;
+            
             sidebarContent.innerHTML = '';
             
             products.forEach(product => {
@@ -2539,6 +2598,8 @@
         function updateSidebarPage(category) {
             const products = productData[category] || productData.all;
             const sidebarContent = document.getElementById('sidebar-content-page');
+            if (!sidebarContent) return;
+            
             sidebarContent.innerHTML = '';
             
             products.forEach(product => {
@@ -2561,6 +2622,8 @@
         // ========== SHOP PRODUCTS ==========
         function loadShopProducts(category) {
             const shopProductsContainer = document.getElementById('shop-products');
+            if (!shopProductsContainer) return;
+            
             let filteredProducts = shopProducts;
             
             if (category !== 'all') {
@@ -2606,9 +2669,13 @@
             currentBlogPostIndex = index;
             const post = blogPosts[index];
             
-            document.getElementById('blog-post-title').textContent = post.title;
-            document.getElementById('blog-post-category').textContent = post.category.charAt(0).toUpperCase() + post.category.slice(1);
-            document.getElementById('blog-post-content').innerHTML = `<p>${post.content}</p>`;
+            const titleElement = document.getElementById('blog-post-title');
+            const categoryElement = document.getElementById('blog-post-category');
+            const contentElement = document.getElementById('blog-post-content');
+            
+            if (titleElement) titleElement.textContent = post.title;
+            if (categoryElement) categoryElement.textContent = post.category.charAt(0).toUpperCase() + post.category.slice(1);
+            if (contentElement) contentElement.innerHTML = `<p>${post.content}</p>`;
             
             // Update sidebar for this category
             updateSidebarPage(post.category);
@@ -2640,6 +2707,8 @@
         // ========== FAQ FUNCTIONALITY ==========
         function loadFAQ() {
             const faqList = document.getElementById('faq-list');
+            if (!faqList) return;
+            
             let html = '';
             
             faqData.forEach((faq, index) => {
@@ -2678,9 +2747,14 @@
         // ========== CALENDAR FUNCTIONALITY ==========
         function generateCalendar() {
             const calendar = document.getElementById('calendar');
+            if (!calendar) return;
+            
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             
-            document.getElementById('current-month').textContent = `${monthNames[currentCalendarMonth]} ${currentCalendarYear}`;
+            const currentMonthElement = document.getElementById('current-month');
+            if (currentMonthElement) {
+                currentMonthElement.textContent = `${monthNames[currentCalendarMonth]} ${currentCalendarYear}`;
+            }
             
             // Get first day of month
             const firstDay = new Date(currentCalendarYear, currentCalendarMonth, 1).getDay();
@@ -2746,9 +2820,13 @@
             const details = serviceDetails[service];
             if (!details) return;
             
-            document.getElementById('modal-title').textContent = details.title;
-            document.getElementById('modal-body').innerHTML = details.content;
-            document.getElementById('service-modal').classList.add('active');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const serviceModal = document.getElementById('service-modal');
+            
+            if (modalTitle) modalTitle.textContent = details.title;
+            if (modalBody) modalBody.innerHTML = details.content;
+            if (serviceModal) serviceModal.classList.add('active');
             
             // Add event listeners to buttons in modal
             setTimeout(() => {
@@ -2843,15 +2921,22 @@
                 `;
             }
             
-            document.getElementById('subscription-modal-title').textContent = title;
-            document.getElementById('subscription-modal-body').innerHTML = content;
-            document.getElementById('subscription-modal').classList.add('active');
+            const modalTitle = document.getElementById('subscription-modal-title');
+            const modalBody = document.getElementById('subscription-modal-body');
+            const subscriptionModal = document.getElementById('subscription-modal');
+            
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalBody) modalBody.innerHTML = content;
+            if (subscriptionModal) subscriptionModal.classList.add('active');
             
             setTimeout(() => {
-                document.getElementById('confirm-subscription')?.addEventListener('click', () => {
-                    closeAllModals();
-                    showSuccess('Subscription Confirmed', 'Thank you for your subscription! You now have access to the Stork Helpers app. Check your email for login instructions.');
-                });
+                const confirmBtn = document.getElementById('confirm-subscription');
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', () => {
+                        closeAllModals();
+                        showSuccess('Subscription Confirmed', 'Thank you for your subscription! You now have access to the Stork Helpers app. Check your email for login instructions.');
+                    });
+                }
             }, 100);
         }
 
@@ -2862,17 +2947,17 @@
         }
 
         function showSuccess(title, message) {
-            document.getElementById('success-title').textContent = title;
-            document.getElementById('success-message').textContent = message;
-            document.getElementById('success-modal').classList.add('active');
+            const successTitle = document.getElementById('success-title');
+            const successMessage = document.getElementById('success-message');
+            const successModal = document.getElementById('success-modal');
+            
+            if (successTitle) successTitle.textContent = title;
+            if (successMessage) successMessage.textContent = message;
+            if (successModal) successModal.classList.add('active');
         }
 
         // ========== INITIALIZE APPLICATION ==========
         document.addEventListener('DOMContentLoaded', init);
-
-        // Make functions available globally for inline event handlers
-        window.updateQuantity = updateQuantity;
-        window.removeFromCart = removeFromCart;
     </script>
 </body>
 </html>
