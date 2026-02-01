@@ -1,0 +1,2878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stork Helpers | Doula Support & Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --sage: #87a96b;
+            --stone: #d4c9be;
+            --slate: #5a6d7a;
+            --dark-sage: #6d8b5c;
+            --light-sage: #e8f0e3;
+            --light-stone: #f5f1ec;
+            --dark-slate: #3a4856;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+        }
+        
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--light-stone);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--sage);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-sage);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--sage);
+            color: var(--sage);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--sage);
+            color: white;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--dark-slate);
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--dark-sage);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            color: var(--dark-slate);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--sage);
+        }
+        
+        .nav-links a.active {
+            color: var(--sage);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--sage);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-sage);
+            cursor: pointer;
+        }
+        
+        /* Page System */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            flex: 1;
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            color: var(--dark-slate);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .service-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.1);
+        }
+        
+        .service-content {
+            padding: 25px;
+        }
+        
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-slate);
+        }
+        
+        /* Dynamic Blog Sidebar */
+        .blog-section {
+            background-color: var(--light-sage);
+        }
+        
+        .blog-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .blog-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .blog-sidebar {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            align-self: flex-start;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .blog-sidebar h3 {
+            color: var(--dark-sage);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-sage);
+        }
+        
+        .sidebar-product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sidebar-product:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .product-img {
+            width: 70px;
+            height: 70px;
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            position: relative;
+        }
+        
+        .product-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.7);
+            border-radius: var(--border-radius);
+        }
+        
+        .product-img i {
+            z-index: 1;
+        }
+        
+        .product-info h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--sage);
+        }
+        
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 30px;
+        }
+        
+        .category-tag {
+            background-color: var(--light-sage);
+            color: var(--dark-sage);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .category-tag.active, .category-tag:hover {
+            background-color: var(--sage);
+            color: white;
+        }
+        
+        /* Shop Section */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .shop-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .shop-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .shop-item-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .shop-item-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.7);
+        }
+        
+        .shop-item-img i {
+            z-index: 1;
+        }
+        
+        .shop-item-content {
+            padding: 20px;
+        }
+        
+        .shop-item-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .shop-item-type {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .digital {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .physical {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        /* Cart System */
+        .cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--sage);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .cart-count {
+            background-color: var(--dark-sage);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        .cart-link {
+            position: relative;
+        }
+        
+        /* Reviews Section */
+        .reviews-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: var(--light-sage);
+            color: var(--dark-sage);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--sage);
+            color: white;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .review-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .reviewer-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.7);
+            border-radius: 50%;
+        }
+        
+        .reviewer-avatar span {
+            z-index: 1;
+        }
+        
+        .stars {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        
+        /* About Page */
+        .about-hero {
+            background-color: var(--dark-sage);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            border-radius: var(--border-radius);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .about-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.1);
+            border-radius: var(--border-radius);
+        }
+        
+        .about-text {
+            flex: 2;
+        }
+        
+        .about-text h2 {
+            color: var(--dark-slate);
+            margin-bottom: 20px;
+        }
+        
+        /* Contact Page */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-form {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-slate);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--stone);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--sage);
+            box-shadow: 0 0 0 2px rgba(135, 169, 107, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .availability-calendar {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-day.header {
+            font-weight: 600;
+            color: var(--dark-slate);
+            cursor: default;
+        }
+        
+        .calendar-day.available {
+            background-color: var(--light-sage);
+            color: var(--dark-sage);
+        }
+        
+        .calendar-day.available:hover {
+            background-color: var(--sage);
+            color: white;
+        }
+        
+        .calendar-day.booked {
+            background-color: #ffeaea;
+            color: #c44545;
+            cursor: not-allowed;
+        }
+        
+        /* FAQ Page */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-search {
+            margin-bottom: 30px;
+        }
+        
+        .faq-search input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--stone);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .faq-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark-slate);
+        }
+        
+        .faq-question i {
+            transition: var(--transition);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        /* Partners Page */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .partner-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .partner-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--light-sage);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--sage);
+            font-size: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-slate);
+            color: white;
+            padding: 70px 0 30px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--stone);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--stone);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Modal System */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-header h3 {
+            color: var(--dark-sage);
+            margin-bottom: 15px;
+        }
+        
+        /* Cart Page */
+        .cart-items {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--light-stone);
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 20px;
+            font-size: 1.5rem;
+            position: relative;
+        }
+        
+        .cart-item-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(135, 169, 107, 0.7);
+            border-radius: var(--border-radius);
+        }
+        
+        .cart-item-img i {
+            z-index: 1;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--light-sage);
+            border: none;
+            color: var(--dark-sage);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-total {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .cart-total h3 {
+            margin-bottom: 20px;
+            color: var(--dark-slate);
+        }
+        
+        .total-amount {
+            font-size: 2rem;
+            color: var(--sage);
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        /* Checkout Page */
+        .checkout-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .checkout-form, .order-summary {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-method {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid var(--light-stone);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-method.active {
+            border-color: var(--sage);
+            background-color: var(--light-sage);
+        }
+        
+        /* Subscription Page */
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .subscription-plan {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .subscription-plan.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--sage);
+        }
+        
+        .subscription-plan.featured .btn {
+            background-color: var(--dark-sage);
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            color: var(--sage);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-stone);
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features li i {
+            color: var(--sage);
+            margin-right: 10px;
+        }
+        
+        /* Image Containers */
+        .img-container {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            border-radius: inherit;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .blog-container {
+                flex-direction: column;
+            }
+            
+            .blog-sidebar {
+                position: static;
+                width: 100%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .subscription-plan.featured {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .cart-item-img {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-dove"></i>
+                    <span>Stork Helpers</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#services" class="nav-link" data-page="services">Services</a></li>
+                    <li><a href="#blog" class="nav-link" data-page="blog">Blog</a></li>
+                    <li><a href="#shop" class="nav-link" data-page="shop">Shop</a></li>
+                    <li><a href="#subscription" class="nav-link" data-page="subscription">Subscription</a></li>
+                    <li><a href="#partners" class="nav-link" data-page="partners">Partners</a></li>
+                    <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="#faq" class="nav-link" data-page="faq">FAQ</a></li>
+                    <li>
+                        <a href="#cart" class="nav-link cart-link" data-page="cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cart-notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Item added to cart!</span>
+    </div>
+
+    <!-- Home Page -->
+    <section class="page active" id="home-page">
+        <div class="hero">
+            <div class="container">
+                <h1>Supporting Your Journey from Pregnancy to Parenthood</h1>
+                <p>With 8+ years of expertise and a compassionate approach, Stork Helpers provides evidence-based doula support, educational resources, and essential products for expectant and new parents.</p>
+                <div class="hero-btns">
+                    <a href="#services" class="btn nav-link" data-page="services">Explore Services</a>
+                    <a href="#blog" class="btn btn-outline nav-link" data-page="blog">Read Our Blog</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Preview -->
+        <section id="services-preview">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Services</h2>
+                    <p>Comprehensive support for every stage of your pregnancy, birth, and postpartum journey.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card" data-service="birth-support">
+                        <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1512675828443-4f454c42253a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <i class="fas fa-home" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Birth Support Hub</h3>
+                            <p>Home and hospital birth support with integrated lead capture for personalized consultation.</p>
+                            <button class="btn service-detail-btn" style="margin-top: 15px;">Learn More</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service="virtual-support">
+                        <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <i class="fas fa-mobile-alt" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Virtual Support App</h3>
+                            <p>Subscription-based app with 24/7 access to resources, community, and expert guidance.</p>
+                            <button class="btn service-detail-btn" style="margin-top: 15px;">Explore App</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service="education">
+                        <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <i class="fas fa-graduation-cap" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Childbirth Education</h3>
+                            <p>In-person and on-demand classes covering all aspects of pregnancy, labor, and newborn care.</p>
+                            <button class="btn service-detail-btn" style="margin-top: 15px;">View Classes</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service="placenta">
+                        <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                            <i class="fas fa-leaf" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Placenta Services</h3>
+                            <p>Professional placenta encapsulation and placenta art services for postpartum recovery.</p>
+                            <button class="btn service-detail-btn" style="margin-top: 15px;">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Preview -->
+        <section class="blog-section" id="blog-preview">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Evidence-Based Birth Blog</h2>
+                    <p>Our high-authority blog with 1M+ annual views - now with dynamic product recommendations based on content.</p>
+                </div>
+                
+                <div class="blog-container">
+                    <div class="blog-content">
+                        <div class="blog-post">
+                            <h3>Navigating the Fourth Trimester: A Postpartum Survival Guide</h3>
+                            <p class="post-meta">Published: May 15, 2023 | Category: <span class="post-category">Postpartum</span></p>
+                            <p>The first three months after birth, often called the "fourth trimester," can be both beautiful and overwhelming. In this comprehensive guide, we explore evidence-based strategies for physical recovery, emotional adjustment, and practical newborn care during this transitional period.</p>
+                            <a href="#blog" class="btn nav-link" data-page="blog" style="margin-top: 20px;">Read Full Article</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Sidebar -->
+                    <aside class="blog-sidebar" id="dynamic-sidebar">
+                        <h3>Recommended Products</h3>
+                        <div id="sidebar-content">
+                            <!-- Content will be dynamically inserted here based on blog category -->
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Services Page -->
+    <section class="page" id="services-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Comprehensive Services</h2>
+                <p>Every service is designed to support your unique journey through pregnancy, birth, and postpartum.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-service="birth-support">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1512675828443-4f454c42253a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-home" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Birth Support Hub</h3>
+                        <p>Home and hospital birth support with integrated lead capture for personalized consultation.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">Learn More</button>
+                    </div>
+                </div>
+                <div class="service-card" data-service="virtual-support">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-mobile-alt" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Virtual Support App</h3>
+                        <p>Subscription-based app with 24/7 access to resources, community, and expert guidance.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">Explore App</button>
+                    </div>
+                </div>
+                <div class="service-card" data-service="education">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-graduation-cap" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Childbirth Education</h3>
+                        <p>In-person and on-demand classes covering all aspects of pregnancy, labor, and newborn care.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">View Classes</button>
+                    </div>
+                </div>
+                <div class="service-card" data-service="placenta">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-leaf" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Placenta Services</h3>
+                        <p>Professional placenta encapsulation and placenta art services for postpartum recovery.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">Learn More</button>
+                    </div>
+                </div>
+                <div class="service-card" data-service="planning">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-calendar-check" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Birth Planning Sessions</h3>
+                        <p>1-on-1 consultations to create personalized birth plans that reflect your values and preferences.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">Book Session</button>
+                    </div>
+                </div>
+                <div class="service-card" data-service="tub">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1565896314091-4dc29d43071a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-bath" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Birth Tub Experience</h3>
+                        <p>Logistics and benefits of water birth tools for pain management and comfortable labor.</p>
+                        <button class="btn service-detail-btn" style="margin-top: 15px;">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Page -->
+    <section class="page blog-section" id="blog-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Evidence-Based Birth Blog</h2>
+                <p>Our high-authority blog with 1M+ annual views - now with dynamic product recommendations based on content.</p>
+            </div>
+            
+            <div class="category-tags">
+                <button class="category-tag active" data-category="all">All Posts</button>
+                <button class="category-tag" data-category="postpartum">Postpartum</button>
+                <button class="category-tag" data-category="labor">Labor & Birth</button>
+                <button class="category-tag" data-category="newborn">Newborn Care</button>
+                <button class="category-tag" data-category="pregnancy">Pregnancy</button>
+                <button class="category-tag" data-category="breastfeeding">Breastfeeding</button>
+            </div>
+            
+            <div class="blog-container">
+                <div class="blog-content">
+                    <div class="blog-post">
+                        <h3 id="blog-post-title">Navigating the Fourth Trimester: A Postpartum Survival Guide</h3>
+                        <p class="post-meta">Published: May 15, 2023 | Category: <span id="blog-post-category">Postpartum</span></p>
+                        <div id="blog-post-content">
+                            <p>The first three months after birth, often called the "fourth trimester," can be both beautiful and overwhelming. In this comprehensive guide, we explore evidence-based strategies for physical recovery, emotional adjustment, and practical newborn care during this transitional period.</p>
+                            <p>From managing sleep deprivation to understanding postpartum body changes, we've compiled the essential information every new parent needs. Our approach balances clinical recommendations with compassionate, real-world advice from experienced doulas.</p>
+                            <p>Remember, asking for help isn't a sign of weakness—it's a crucial part of the postpartum journey. Whether it's delegating household tasks or seeking professional support for breastfeeding challenges, building your support network early can make a significant difference in your experience.</p>
+                        </div>
+                        
+                        <div class="blog-navigation" style="margin-top: 40px; display: flex; justify-content: space-between; border-top: 1px solid var(--stone); padding-top: 20px;">
+                            <button class="btn btn-outline" id="prev-post"><i class="fas fa-arrow-left"></i> Previous Post</button>
+                            <button class="btn btn-outline" id="next-post">Next Post <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dynamic Sidebar -->
+                <aside class="blog-sidebar" id="dynamic-sidebar-page">
+                    <h3>Recommended Products</h3>
+                    <div id="sidebar-content-page">
+                        <!-- Content will be dynamically inserted here based on blog category -->
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Page -->
+    <section class="page" id="shop-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Unified Shop</h2>
+                <p>Digital toolkits and physical products designed to support your journey, with automated digital delivery and inventory tracking.</p>
+            </div>
+            
+            <div class="category-tags" style="margin-bottom: 40px;">
+                <button class="category-tag active" data-category="all">All Products</button>
+                <button class="category-tag" data-category="digital">Digital Toolkits</button>
+                <button class="category-tag" data-category="physical">Physical Products</button>
+                <button class="category-tag" data-category="bundles">Bundles</button>
+            </div>
+            
+            <div class="shop-grid" id="shop-products">
+                <!-- Products loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Page -->
+    <section class="page" id="subscription-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Virtual Support Subscription</h2>
+                <p>Monthly access to our comprehensive app with resources, community, and expert guidance. No free trials - committed support for committed parents.</p>
+            </div>
+            
+            <div class="subscription-plans">
+                <div class="subscription-plan">
+                    <h3>Monthly Plan</h3>
+                    <div class="plan-price">$24.99<span>/month</span></div>
+                    <p>Perfect for trying out the app or short-term support</p>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Full app access</li>
+                        <li><i class="fas fa-check"></i> Weekly Q&A sessions</li>
+                        <li><i class="fas fa-check"></i> Community forum access</li>
+                        <li><i class="fas fa-check"></i> Monthly resource packs</li>
+                        <li><i class="fas fa-times"></i> Annual bonus materials</li>
+                    </ul>
+                    <button class="btn" data-plan="monthly">Subscribe Now</button>
+                </div>
+                
+                <div class="subscription-plan featured">
+                    <div style="background-color: var(--sage); color: white; padding: 5px 10px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">Most Popular</div>
+                    <h3>Annual Plan</h3>
+                    <div class="plan-price">$249.99<span>/year</span></div>
+                    <p>Save 16% with annual commitment</p>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Full app access</li>
+                        <li><i class="fas fa-check"></i> Weekly Q&A sessions</li>
+                        <li><i class="fas fa-check"></i> Community forum access</li>
+                        <li><i class="fas fa-check"></i> Monthly resource packs</li>
+                        <li><i class="fas fa-check"></i> Annual bonus materials</li>
+                        <li><i class="fas fa-check"></i> 2 one-on-one consultations</li>
+                    </ul>
+                    <button class="btn" data-plan="annual">Subscribe Now</button>
+                </div>
+                
+                <div class="subscription-plan">
+                    <h3>Lifetime Access</h3>
+                    <div class="plan-price">$499.99<span>/one-time</span></div>
+                    <p>One-time payment for permanent access</p>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Permanent app access</li>
+                        <li><i class="fas fa-check"></i> All future updates included</li>
+                        <li><i class="fas fa-check"></i> Community forum access</li>
+                        <li><i class="fas fa-check"></i> All resource packs</li>
+                        <li><i class="fas fa-check"></i> 5 one-on-one consultations</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                    </ul>
+                    <button class="btn" data-plan="lifetime">Purchase</button>
+                </div>
+            </div>
+            
+            <div style="max-width: 800px; margin: 60px auto 0; background-color: var(--light-sage); padding: 30px; border-radius: var(--border-radius);">
+                <h3 style="color: var(--dark-sage); margin-bottom: 20px; text-align: center;">What's Included in the App</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-video" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                        <h4>50+ Video Classes</h4>
+                        <p style="font-size: 0.9rem;">On-demand birth and postpartum education</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-comments" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                        <h4>Live Q&A Sessions</h4>
+                        <p style="font-size: 0.9rem;">Weekly sessions with certified doulas</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-users" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                        <h4>Private Community</h4>
+                        <p style="font-size: 0.9rem;">Connect with other parents on the same journey</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-tools" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                        <h4>Resource Library</h4>
+                        <p style="font-size: 0.9rem;">Meditations, checklists, and printable guides</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Page -->
+    <section class="page" id="partners-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Vetted Partner Network</h2>
+                <p>Our carefully selected network of clinical experts and business partners who align with our values and standards.</p>
+            </div>
+            
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Chiropractic Care</h3>
+                    <p>Pregnancy-friendly chiropractors specializing in prenatal and postpartum care.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Find Providers</button>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Physical Therapy</h3>
+                    <p>Specialized PTs for diastasis recti, pelvic floor recovery, and postpartum healing.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Find Providers</button>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>Travel Agencies</h3>
+                    <p>Experts in babymoon and family travel planning with pregnancy considerations.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Find Agencies</button>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Lactation Consultants</h3>
+                    <p>IBCLC-certified consultants for breastfeeding support and challenges.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Find Consultants</button>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Mental Health</h3>
+                    <p>Therapists specializing in perinatal mental health and postpartum support.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Find Therapists</button>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Doula Mentorship</h3>
+                    <p>Professional training and mentorship for aspiring doulas.</p>
+                    <button class="btn btn-small" style="margin-top: 15px;">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section class="page" id="about-page">
+        <div class="about-hero">
+            <div class="container">
+                <h1>Our Story & Philosophy</h1>
+                <p>8+ years of supporting families through evidence-based, compassionate care</p>
+            </div>
+        </div>
+        
+        <div class="container" style="padding-top: 80px;">
+            <div class="about-content">
+                <div class="about-img" style="background-image: url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="about-text">
+                    <h2>Meet Tamara, Founder of Stork Helpers</h2>
+                    <p>After supporting her first birth in 2015, Tamara recognized a gap in the support system for expectant parents. What began as a passion project has grown into a high-authority doula brand serving thousands of families across the country.</p>
+                    <p>With a background in both healthcare and holistic wellness, Tamara developed the "Supporting Character" philosophy: doulas as essential support actors in the birth story, empowering parents to be the protagonists of their own journeys.</p>
+                    <p>Today, Stork Helpers combines clinical evidence with compassionate care, offering a full spectrum of services from pregnancy through postpartum. Our team of certified doulas, educators, and specialists are united by a commitment to evidence-based, personalized support.</p>
+                </div>
+            </div>
+            
+            <div class="section-header">
+                <h2>Our Core Values</h2>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-book-medical" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Evidence-Based</h3>
+                        <p>We ground our practice in the latest research while respecting individual choices and informed consent.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1590650153855-d9e808231d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+                        <i class="fas fa-hands" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Compassionate</h3>
+                        <p>We approach every family with empathy, patience, and non-judgmental support for their unique journey.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1530041539828-114de669390e?ixlib=rb-4.0.3&auto=format&fit=crop&w-1350&q=80');">
+                        <i class="fas fa-users" style="color: white; font-size: 3rem; z-index: 1;"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Community-Focused</h3>
+                        <p>We believe in building supportive networks and connecting families with trusted resources.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section class="page" id="contact-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch for inquiries, consultations, or to check availability for our services.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 20px; color: var(--dark-slate);">Send a Message</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service Interest</label>
+                            <select id="service" class="form-control" required>
+                                <option value="">Select a service</option>
+                                <option value="birth-support">Birth Support</option>
+                                <option value="virtual-support">Virtual Support App</option>
+                                <option value="education">Childbirth Education</option>
+                                <option value="placenta">Placenta Services</option>
+                                <option value="planning">Birth Planning Session</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="availability-calendar">
+                    <h3 style="margin-bottom: 20px; color: var(--dark-slate);">Availability</h3>
+                    <div class="calendar-header">
+                        <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <h4 id="current-month">June 2023</h4>
+                        <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="calendar">
+                        <!-- Calendar generated dynamically -->
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background-color: var(--light-sage); border-radius: var(--border-radius);">
+                        <p><strong>Availability Key:</strong></p>
+                        <p><span style="display: inline-block; width: 15px; height: 15px; background-color: var(--light-sage); border-radius: 3px; margin-right: 10px;"></span> Available</p>
+                        <p><span style="display: inline-block; width: 15px; height: 15px; background-color: #ffeaea; border-radius: 3px; margin-right: 10px;"></span> Booked</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Page -->
+    <section class="page" id="faq-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our services, products, and processes.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-search">
+                    <input type="text" id="faq-search" placeholder="Search FAQs..." class="form-control">
+                </div>
+                
+                <div class="faq-list" id="faq-list">
+                    <!-- FAQ items loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Page -->
+    <section class="page" id="cart-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Shopping Cart</h2>
+                <p>Review your items before checkout</p>
+            </div>
+            
+            <div id="cart-content">
+                <!-- Cart items loaded dynamically -->
+                <div class="cart-empty" style="text-align: center; padding: 60px 0;">
+                    <i class="fas fa-shopping-cart" style="font-size: 4rem; color: var(--stone); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--dark-slate); margin-bottom: 15px;">Your cart is empty</h3>
+                    <p style="color: var(--text-light); margin-bottom: 30px;">Add some products from our shop to get started!</p>
+                    <a href="#shop" class="btn nav-link" data-page="shop">Browse Products</a>
+                </div>
+            </div>
+            
+            <div class="cart-total" id="cart-total" style="display: none;">
+                <h3>Order Summary</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Shipping:</span>
+                    <span id="cart-shipping">$5.99</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 30px; font-weight: 600;">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+                <button class="btn" id="checkout-btn" style="width: 100%;">Proceed to Checkout</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Page -->
+    <section class="page" id="checkout-page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Checkout</h2>
+                <p>Complete your purchase with our secure checkout</p>
+            </div>
+            
+            <div class="checkout-container">
+                <div class="checkout-form">
+                    <h3 style="margin-bottom: 20px; color: var(--dark-slate);">Billing Information</h3>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <label for="checkout-name">Full Name</label>
+                            <input type="text" id="checkout-name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checkout-email">Email Address</label>
+                            <input type="email" id="checkout-email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checkout-address">Shipping Address</label>
+                            <textarea id="checkout-address" class="form-control" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <div class="payment-methods">
+                                <div class="payment-method active" data-method="credit">
+                                    <i class="fas fa-credit-card" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+                                    <p>Credit Card</p>
+                                </div>
+                                <div class="payment-method" data-method="paypal">
+                                    <i class="fab fa-paypal" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+                                    <p>PayPal</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="credit-card-fields">
+                            <div class="form-group">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="card-expiry">Expiry Date</label>
+                                    <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY">
+                                </div>
+                                
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="card-cvc">CVC</label>
+                                    <input type="text" id="card-cvc" class="form-control" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Complete Purchase</button>
+                    </form>
+                </div>
+                
+                <div class="order-summary">
+                    <h3 style="margin-bottom: 20px; color: var(--dark-slate);">Order Summary</h3>
+                    <div id="checkout-items">
+                        <!-- Order items loaded dynamically -->
+                    </div>
+                    <div style="border-top: 1px solid var(--light-stone); padding-top: 20px; margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Subtotal:</span>
+                            <span id="checkout-subtotal">$0.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Shipping:</span>
+                            <span id="checkout-shipping">$5.99</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem;">
+                            <span>Total:</span>
+                            <span id="checkout-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Stork Helpers</h3>
+                    <p>With 8+ years of experience, we provide evidence-based doula support, educational resources, and products for expectant and new parents.</p>
+                    <div style="margin-top: 20px;">
+                        <i class="fas fa-phone" style="margin-right: 10px;"></i> (555) 123-4567<br>
+                        <i class="fas fa-envelope" style="margin-right: 10px;"></i> support@storkhelpers.com
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#services" class="nav-link" data-page="services">Services</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Blog</a></li>
+                        <li><a href="#shop" class="nav-link" data-page="shop">Shop</a></li>
+                        <li><a href="#subscription" class="nav-link" data-page="subscription">Subscription</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#faq" class="nav-link" data-page="faq">FAQ</a></li>
+                        <li><a href="#about" class="nav-link" data-page="about">About Us</a></li>
+                        <li><a href="#partners" class="nav-link" data-page="partners">Partners</a></li>
+                        <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                        <li><a href="#" id="privacy-link">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <p>Subscribe to our newsletter for evidence-based pregnancy and parenting tips.</p>
+                    <div style="margin-top: 20px;">
+                        <input type="email" id="newsletter-email" placeholder="Your email address" style="padding: 12px; border-radius: 5px; border: 1px solid var(--stone); width: 70%;">
+                        <button class="btn" id="newsletter-btn" style="padding: 12px 20px; margin-left: 5px;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Stork Helpers. All rights reserved. | <a href="#" id="terms-link">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Detail Modal -->
+    <div class="modal" id="service-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <h3 id="modal-title">Service Details</h3>
+            </div>
+            <div id="modal-body">
+                <!-- Service details will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div class="modal" id="subscription-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <h3 id="subscription-modal-title">Subscribe Now</h3>
+            </div>
+            <div id="subscription-modal-body">
+                <!-- Subscription details will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div style="text-align: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--sage); margin-bottom: 20px;"></i>
+                <h3 id="success-title" style="color: var(--dark-slate); margin-bottom: 15px;">Success!</h3>
+                <p id="success-message">Your action has been completed successfully.</p>
+                <button class="btn" id="success-close" style="margin-top: 20px;">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== APPLICATION STATE & DATA ==========
+        let currentPage = 'home';
+        let cart = JSON.parse(localStorage.getItem('stork-helpers-cart')) || [];
+        let currentBlogCategory = 'postpartum';
+        let currentCalendarMonth = new Date().getMonth();
+        let currentCalendarYear = new Date().getFullYear();
+
+        // Product data for different categories with proper images
+        const productData = {
+            postpartum: [
+                {id: 1, icon: 'fas fa-book', name: 'Postpartum Survival Guide', price: 24.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 2, icon: 'fas fa-spa', name: 'Sitz Bath Herbs', price: 18.50, type: 'physical', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 3, icon: 'fas fa-heart', name: 'Newborn Care Toolkit', price: 29.99, type: 'digital', image: 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 4, icon: 'fas fa-mortar-pestle', name: 'Lactation Support Tea', price: 16.99, type: 'physical', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&auto=format&fit=crop&w-1350&q=80'}
+            ],
+            labor: [
+                {id: 5, icon: 'fas fa-toolbox', name: 'Birth Planning Bundle', price: 34.99, type: 'digital', image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 6, icon: 'fas fa-water', name: 'Water Birth Guide', price: 19.99, type: 'digital', image: 'https://images.unsplash.com/photo-1565896314091-4dc29d43071a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 7, icon: 'fas fa-hand-holding-heart', name: 'Labor Comfort Kit', price: 42.50, type: 'physical', image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
+            ],
+            newborn: [
+                {id: 8, icon: 'fas fa-moon', name: 'Newborn Sleep Guide', price: 19.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 9, icon: 'fas fa-baby', name: 'First Week Survival Kit', price: 28.75, type: 'physical', image: 'https://images.unsplash.com/photo-1530041539828-114de669390e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 10, icon: 'fas fa-book-medical', name: 'Baby Health Log', price: 14.99, type: 'digital', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
+            ],
+            pregnancy: [
+                {id: 11, icon: 'fas fa-apple-alt', name: 'Pregnancy Nutrition Plan', price: 22.99, type: 'digital', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 12, icon: 'fas fa-dumbbell', name: 'Prenatal Exercise Guide', price: 18.50, type: 'digital', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 13, icon: 'fas fa-calendar-check', name: 'Pregnancy Week-by-Week', price: 21.99, type: 'digital', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
+            ],
+            breastfeeding: [
+                {id: 14, icon: 'fas fa-heart', name: 'Breastfeeding Success Guide', price: 24.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 15, icon: 'fas fa-tint', name: 'Nursing Support Salve', price: 14.99, type: 'physical', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 4, icon: 'fas fa-mortar-pestle', name: 'Lactation Support Tea', price: 16.99, type: 'physical', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
+            ],
+            all: [
+                {id: 1, icon: 'fas fa-book', name: 'Postpartum Survival Guide', price: 24.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 5, icon: 'fas fa-toolbox', name: 'Birth Planning Bundle', price: 34.99, type: 'digital', image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 8, icon: 'fas fa-moon', name: 'Newborn Sleep Guide', price: 19.99, type: 'digital', image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 2, icon: 'fas fa-spa', name: 'Sitz Bath Herbs', price: 18.50, type: 'physical', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 7, icon: 'fas fa-hand-holding-heart', name: 'Labor Comfort Kit', price: 42.50, type: 'physical', image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'},
+                {id: 15, icon: 'fas fa-tint', name: 'Nursing Support Salve', price: 14.99, type: 'physical', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'}
+            ]
+        };
+
+        // Shop products data with proper images
+        const shopProducts = [
+            {id: 1, name: 'Postpartum Survival Guide', price: 24.99, type: 'digital', category: 'postpartum', icon: 'fas fa-book', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Comprehensive PDF guide for postpartum recovery and newborn care.'},
+            {id: 2, name: 'Sitz Bath Herbs', price: 18.50, type: 'physical', category: 'postpartum', icon: 'fas fa-spa', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Organic herbal blend for perineal healing and comfort after birth.'},
+            {id: 3, name: 'Newborn Care Toolkit', price: 29.99, type: 'digital', category: 'newborn', icon: 'fas fa-heart', image: 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Digital toolkit covering all aspects of newborn care in the first 3 months.'},
+            {id: 4, name: 'Lactation Support Tea', price: 16.99, type: 'physical', category: 'breastfeeding', icon: 'fas fa-mortar-pestle', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Herbal tea blend to support healthy milk production.'},
+            {id: 5, name: 'Birth Planning Bundle', price: 34.99, type: 'digital', category: 'labor', icon: 'fas fa-toolbox', image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Comprehensive PDF guides for creating your ideal birth plan.'},
+            {id: 6, name: 'Water Birth Guide', price: 19.99, type: 'digital', category: 'labor', icon: 'fas fa-water', image: 'https://images.unsplash.com/photo-1565896314091-4dc29d43071a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Evidence-based guide to water birth benefits and logistics.'},
+            {id: 7, name: 'Labor Comfort Kit', price: 42.50, type: 'physical', category: 'labor', icon: 'fas fa-hand-holding-heart', image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Physical kit with tools for pain management during labor.'},
+            {id: 8, name: 'Newborn Sleep Guide', price: 19.99, type: 'digital', category: 'newborn', icon: 'fas fa-moon', image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Evidence-based strategies for establishing healthy sleep patterns.'},
+            {id: 9, name: 'First Week Survival Kit', price: 28.75, type: 'physical', category: 'newborn', icon: 'fas fa-baby', image: 'https://images.unsplash.com/photo-1530041539828-114de669390e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Essential products for the first week with your newborn.'},
+            {id: 10, name: 'Baby Health Log', price: 14.99, type: 'digital', category: 'newborn', icon: 'fas fa-book-medical', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Printable log for tracking feeding, diapers, sleep, and symptoms.'},
+            {id: 11, name: 'Pregnancy Nutrition Plan', price: 22.99, type: 'digital', category: 'pregnancy', icon: 'fas fa-apple-alt', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Customizable meal plans and nutrition guide for each trimester.'},
+            {id: 12, name: 'Prenatal Exercise Guide', price: 18.50, type: 'digital', category: 'pregnancy', icon: 'fas fa-dumbbell', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Safe exercise routines for each stage of pregnancy.'},
+            {id: 13, name: 'Pregnancy Week-by-Week', price: 21.99, type: 'digital', category: 'pregnancy', icon: 'fas fa-calendar-check', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Detailed guide to fetal development and bodily changes each week.'},
+            {id: 14, name: 'Breastfeeding Success Guide', price: 24.99, type: 'digital', category: 'breastfeeding', icon: 'fas fa-heart', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Comprehensive guide to breastfeeding techniques and troubleshooting.'},
+            {id: 15, name: 'Nursing Support Salve', price: 14.99, type: 'physical', category: 'breastfeeding', icon: 'fas fa-tint', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Organic salve for nipple care and comfort during breastfeeding.'},
+            {id: 16, name: 'Ultimate Birth Bundle', price: 89.99, type: 'digital', category: 'bundles', icon: 'fas fa-gift', image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', description: 'Complete collection of all our digital guides (Birth Planning, Postpartum, Newborn Care, Breastfeeding).'}
+        ];
+
+        // Blog posts data
+        const blogPosts = [
+            {id: 1, title: 'Navigating the Fourth Trimester: A Postpartum Survival Guide', category: 'postpartum', date: 'May 15, 2023', content: 'The first three months after birth, often called the "fourth trimester," can be both beautiful and overwhelming. In this comprehensive guide, we explore evidence-based strategies for physical recovery, emotional adjustment, and practical newborn care during this transitional period. From managing sleep deprivation to understanding postpartum body changes, we\'ve compiled the essential information every new parent needs.'},
+            {id: 2, title: 'Evidence-Based Pain Management Techniques for Labor', category: 'labor', date: 'April 22, 2023', content: 'Labor pain is a normal part of the birth process, but that doesn\'t mean you have to suffer. This article reviews evidence-based pain management techniques from breathing exercises to hydrotherapy. We compare medical and non-medical options to help you make informed decisions about your birth plan.'},
+            {id: 3, title: 'Newborn Sleep Patterns: What to Expect in the First 3 Months', category: 'newborn', date: 'March 10, 2023', content: 'Understanding newborn sleep can help reduce anxiety for new parents. This guide explains normal sleep patterns, safe sleep guidelines, and evidence-based strategies for establishing healthy sleep habits. Learn why newborns sleep so much yet wake so often, and when you can expect longer stretches of sleep.'},
+            {id: 4, title: 'Nutrition During Pregnancy: A Trimester-by-Trimester Guide', category: 'pregnancy', date: 'February 28, 2023', content: 'Proper nutrition is essential for both maternal health and fetal development. This comprehensive guide covers nutritional needs for each trimester, common concerns like morning sickness and heartburn, and evidence-based recommendations for supplements. We also include sample meal plans and recipe ideas.'},
+            {id: 5, title: 'Breastfeeding Challenges and Evidence-Based Solutions', category: 'breastfeeding', date: 'January 15, 2023', content: 'While breastfeeding is natural, it doesn\'t always come naturally. This article addresses common challenges like latch difficulties, low milk supply, and mastitis with evidence-based solutions. We also discuss when to seek professional help and how to balance breastfeeding with returning to work.'},
+            {id: 6, title: 'Creating a Birth Plan That Actually Works', category: 'labor', date: 'December 5, 2022', content: 'A birth plan is more than just a wish list—it\'s a communication tool. Learn how to create a flexible, evidence-based birth plan that respects your preferences while preparing for unexpected changes. We include templates and discuss how to communicate your plan effectively with your healthcare team.'}
+        ];
+
+        // FAQ data
+        const faqData = [
+            {question: 'What exactly does a doula do?', answer: 'A doula provides continuous physical, emotional, and informational support to a mother before, during, and shortly after childbirth. Unlike medical providers, doulas do not perform clinical tasks but rather focus on comfort measures, advocacy, and helping parents make informed decisions.', category: 'services'},
+            {question: 'How far in advance should I book doula services?', answer: 'We recommend booking between 12-20 weeks of pregnancy to ensure availability. However, we sometimes have last-minute availability, so it\'s always worth checking even if you\'re further along in your pregnancy.', category: 'services'},
+            {question: 'Do you accept insurance?', answer: 'Some insurance plans do cover doula services. We provide detailed invoices that you can submit to your insurance company for possible reimbursement. We also accept HSA/FSA payments. Contact us for assistance with insurance verification.', category: 'billing'},
+            {question: 'What is your cancellation policy?', answer: 'For birth support services, cancellations made more than 30 days before your due date receive a full refund. Between 15-30 days, we offer a 50% refund. Cancellations within 14 days of your due date are non-refundable. For classes and consultations, cancellations made 48+ hours in advance receive a full refund.', category: 'billing'},
+            {question: 'How do digital products work?', answer: 'After purchase, digital products are available for immediate download in your account dashboard. You\'ll also receive an email with download links. Digital products are typically PDF guides, video courses, or printable resources that you can access anytime.', category: 'products'},
+            {question: 'Do you ship physical products internationally?', answer: 'Yes, we ship physical products internationally. Shipping rates and delivery times vary by destination. During checkout, you\'ll see available shipping options and costs for your location. Note that some herbal products may have shipping restrictions to certain countries.', category: 'products'},
+            {question: 'What makes your app different from free resources?', answer: 'Our app provides evidence-based, curated content rather than the overwhelming and sometimes contradictory information found online. You get direct access to certified doulas, a supportive community of parents at similar stages, and continuously updated resources based on the latest research.', category: 'subscription'},
+            {question: 'Can I use the app if I\'m not in the United States?', answer: 'Yes! The app is available worldwide. All content is in English, and live sessions are scheduled in Eastern Time, but recordings are available for those in different time zones.', category: 'subscription'},
+            {question: 'How do I access the partner directory?', answer: 'Our vetted partner directory is available to all clients. Simply visit the Partners page and use the search filters to find professionals in your area. Some partners offer special discounts to Stork Helpers clients.', category: 'partners'},
+            {question: 'What qualifies a provider to be in your partner network?', answer: 'All partners undergo a rigorous vetting process including verification of credentials, interviews about their philosophy and approach, and reference checks. We only partner with providers whose values align with our evidence-based, compassionate approach to care.', category: 'partners'}
+        ];
+
+        // Service details data
+        const serviceDetails = {
+            'birth-support': {
+                title: 'Birth Support Hub',
+                content: '<p>Our Birth Support Hub provides comprehensive doula services for both home and hospital births. We offer:</p><ul><li>2 prenatal consultations to discuss your birth preferences</li><li>Continuous labor support at home or in the hospital</li><li>Evidence-based information to help you make informed decisions</li><li>Immediate postpartum support (first 2 hours after birth)</li><li>1 postpartum follow-up visit to process your birth experience</li></ul><p>We integrate with our lead capture system to ensure you receive personalized information and support from your first inquiry through your postpartum period.</p><p><strong>Investment:</strong> $1,200 - $1,800 (sliding scale available)</p><button class="btn" id="book-service-btn" style="margin-top: 20px;">Book a Consultation</button>'
+            },
+            'virtual-support': {
+                title: 'Virtual Support App',
+                content: '<p>The Stork Helpers App provides 24/7 access to resources and support through a monthly subscription model:</p><ul><li>Weekly live Q&A sessions with certified doulas</li><li>Library of 50+ on-demand birth and postpartum classes</li><li>Private community forum for subscribers only</li><li>Monthly resource packs (meditations, checklists, guides)</li><li>10% discount on all shop products and in-person services</li></ul><p>No free trials - we believe in committed support for committed parents.</p><p><strong>Subscription Options:</strong></p><ul><li>Monthly: $24.99/month</li><li>Annual: $249.99/year (save 16%)</li><li>Lifetime: $499.99 one-time</li></ul><button class="btn" id="subscribe-now-btn" style="margin-top: 20px;">View Subscription Plans</button>'
+            },
+            'education': {
+                title: 'Childbirth Education',
+                content: '<p>Our comprehensive childbirth education program includes both in-person and virtual/on-demand options:</p><ul><li>6-week comprehensive childbirth preparation series ($299)</li><li>Weekend intensive workshops for busy parents ($199)</li><li>Specialized classes on breastfeeding, newborn care, and postpartum recovery ($89 each)</li><li>Virtual on-demand library for flexible learning ($24.99/month or $199/year)</li></ul><p>All classes are taught by certified childbirth educators with up-to-date, evidence-based information. In-person classes are available in select cities, with virtual options available worldwide.</p><button class="btn" id="view-classes-btn" style="margin-top: 20px;">View Class Schedule</button>'
+            },
+            'placenta': {
+                title: 'Placenta Services',
+                content: '<p>Professional placenta encapsulation and placenta art services:</p><ul><li>Placenta encapsulation using Traditional Chinese Medicine methods ($250)</li><li>Placenta prints and keepsake art ($150)</li><li>Tinctures and other placenta preparations ($75 add-on)</li><li>Safe, sanitary processing in a dedicated workspace</li></ul><p>Our placenta specialists are trained in bloodborne pathogens safety and follow strict protocols to ensure the highest quality and safety standards. Service includes pickup within 2 hours of birth and delivery of finished products within 48-72 hours.</p><button class="btn" id="learn-more-placenta-btn" style="margin-top: 20px;">Learn More & Book</button>'
+            },
+            'planning': {
+                title: 'Birth Planning Sessions',
+                content: '<p>1-on-1 consultations to create personalized birth plans that reflect your values and preferences:</p><ul><li>90-minute virtual or in-person consultation ($150)</li><li>Personalized birth plan document</li><li>Evidence-based information on all birth options</li><li>Communication strategies for your healthcare team</li><li>Follow-up email support for 2 weeks</li></ul><p>These sessions are perfect for parents who want focused support creating their birth plan but don\'t need full doula services. Also available as an add-on to any of our other services.</p><button class="btn" id="book-planning-btn" style="margin-top: 20px;">Book a Session</button>'
+            },
+            'tub': {
+                title: 'Birth Tub Experience',
+                content: '<p>Logistics and benefits of water birth tools for pain management and comfortable labor:</p><ul><li>Birth tub rental with setup and breakdown ($300/week)</li><li>Water birth education and support</li><li>All necessary equipment (liner, hose, thermometer, etc.)</li><li>Delivery and pickup within 30 miles</li></ul><p>Water immersion during labor is associated with decreased pain, increased satisfaction, and shorter labors. Our birth tubs are hospital-grade, easy to clean, and designed for comfort and safety. Available for home or birth center use.</p><button class="btn" id="rent-tub-btn" style="margin-top: 20px;">Rent a Birth Tub</button>'
+            }
+        };
+
+        // ========== DOM ELEMENTS ==========
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinksContainer = document.querySelector('.nav-links');
+        const cartCount = document.querySelector('.cart-count');
+        const cartNotification = document.getElementById('cart-notification');
+
+        // ========== INITIALIZATION ==========
+        function init() {
+            updateCartCount();
+            setupEventListeners();
+            updateSidebar('postpartum');
+            loadShopProducts('all');
+            loadFAQ();
+            generateCalendar();
+            
+            // Set current page from URL hash if present
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(`${hash}-page`)) {
+                navigateToPage(hash);
+            }
+        }
+
+        // ========== PAGE NAVIGATION ==========
+        function navigateToPage(pageId) {
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+                setTimeout(() => {
+                    page.style.display = 'none';
+                }, 300);
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(`${pageId}-page`);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update current page
+                currentPage = pageId;
+                
+                // Page-specific initializations
+                if (pageId === 'cart') {
+                    loadCart();
+                } else if (pageId === 'checkout') {
+                    loadCheckout();
+                } else if (pageId === 'blog') {
+                    loadBlogPost(0); // Load first blog post
+                }
+                
+                // Close mobile menu
+                navLinksContainer.classList.remove('active');
+            }
+        }
+
+        // ========== EVENT LISTENERS SETUP ==========
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinksContainer.classList.toggle('active');
+            });
+            
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    navigateToPage(pageId);
+                });
+            });
+            
+            // Category tags for blog
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // Remove active class from all tags
+                    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    
+                    // Update sidebar based on selected category
+                    const category = this.getAttribute('data-category');
+                    currentBlogCategory = category;
+                    
+                    if (currentPage === 'blog') {
+                        updateSidebarPage(category);
+                        // Also filter blog posts
+                        filterBlogPosts(category);
+                    } else {
+                        updateSidebar(category);
+                    }
+                });
+            });
+            
+            // Service detail buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('service-detail-btn')) {
+                    const serviceCard = e.target.closest('.service-card');
+                    if (serviceCard) {
+                        const service = serviceCard.getAttribute('data-service');
+                        openServiceModal(service);
+                    }
+                }
+                
+                // Add to cart buttons
+                if (e.target.classList.contains('add-to-cart')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    addToCart(productId);
+                }
+                
+                // Buy now buttons
+                if (e.target.classList.contains('buy-now')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    addToCart(productId);
+                    navigateToPage('cart');
+                }
+                
+                // Checkout button
+                if (e.target.id === 'checkout-btn') {
+                    navigateToPage('checkout');
+                }
+                
+                // Subscription buttons
+                if (e.target.hasAttribute('data-plan')) {
+                    const plan = e.target.getAttribute('data-plan');
+                    openSubscriptionModal(plan);
+                }
+                
+                // Modal close buttons
+                if (e.target.classList.contains('close-modal')) {
+                    closeAllModals();
+                }
+                
+                // Success modal close
+                if (e.target.id === 'success-close') {
+                    document.getElementById('success-modal').classList.remove('active');
+                }
+            });
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showSuccess('Message Sent', 'Thank you for your message! We will respond within 24-48 hours.');
+                    this.reset();
+                });
+            }
+            
+            // Checkout form submission
+            const checkoutForm = document.getElementById('checkout-form');
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showSuccess('Order Placed', 'Thank you for your order! You will receive a confirmation email shortly. Digital products are available in your account immediately.');
+                    cart = [];
+                    updateCartCount();
+                    localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+                    navigateToPage('home');
+                });
+            }
+            
+            // Newsletter subscription
+            const newsletterBtn = document.getElementById('newsletter-btn');
+            if (newsletterBtn) {
+                newsletterBtn.addEventListener('click', function() {
+                    const email = document.getElementById('newsletter-email').value;
+                    if (email && email.includes('@')) {
+                        showSuccess('Subscribed', 'Thank you for subscribing to our newsletter!');
+                        document.getElementById('newsletter-email').value = '';
+                    }
+                });
+            }
+            
+            // FAQ search
+            const faqSearch = document.getElementById('faq-search');
+            if (faqSearch) {
+                faqSearch.addEventListener('input', function() {
+                    searchFAQs(this.value);
+                });
+            }
+            
+            // FAQ item toggle
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('faq-question')) {
+                    const faqItem = e.target.closest('.faq-item');
+                    faqItem.classList.toggle('active');
+                }
+            });
+            
+            // Calendar navigation
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            
+            if (prevMonthBtn) {
+                prevMonthBtn.addEventListener('click', function() {
+                    currentCalendarMonth--;
+                    if (currentCalendarMonth < 0) {
+                        currentCalendarMonth = 11;
+                        currentCalendarYear--;
+                    }
+                    generateCalendar();
+                });
+            }
+            
+            if (nextMonthBtn) {
+                nextMonthBtn.addEventListener('click', function() {
+                    currentCalendarMonth++;
+                    if (currentCalendarMonth > 11) {
+                        currentCalendarMonth = 0;
+                        currentCalendarYear++;
+                    }
+                    generateCalendar();
+                });
+            }
+            
+            // Payment method selection
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.payment-method')) {
+                    const paymentMethod = e.target.closest('.payment-method');
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                    paymentMethod.classList.add('active');
+                    
+                    const method = paymentMethod.getAttribute('data-method');
+                    const creditCardFields = document.getElementById('credit-card-fields');
+                    if (method === 'credit') {
+                        creditCardFields.style.display = 'block';
+                    } else {
+                        creditCardFields.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Blog navigation
+            const prevPostBtn = document.getElementById('prev-post');
+            const nextPostBtn = document.getElementById('next-post');
+            
+            if (prevPostBtn) {
+                prevPostBtn.addEventListener('click', function() {
+                    navigateBlogPost(-1);
+                });
+            }
+            
+            if (nextPostBtn) {
+                nextPostBtn.addEventListener('click', function() {
+                    navigateBlogPost(1);
+                });
+            }
+            
+            // Privacy and Terms links
+            document.getElementById('privacy-link')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSuccess('Privacy Policy', 'Our privacy policy ensures that your personal information is protected. We never sell your data and only use it to provide you with our services.');
+            });
+            
+            document.getElementById('terms-link')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSuccess('Terms of Service', 'By using our services, you agree to our terms which outline the relationship between Stork Helpers and our clients. Full terms are available upon request.');
+            });
+        }
+
+        // ========== CART FUNCTIONALITY ==========
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            document.querySelectorAll('.cart-count').forEach(el => el.textContent = totalItems);
+        }
+
+        function addToCart(productId) {
+            const product = shopProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    type: product.type,
+                    icon: product.icon,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            
+            // Update UI
+            updateCartCount();
+            
+            // Show notification
+            cartNotification.style.display = 'flex';
+            setTimeout(() => {
+                cartNotification.style.display = 'none';
+            }, 3000);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+            updateCartCount();
+            loadCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity < 1) {
+                    removeFromCart(productId);
+                } else {
+                    localStorage.setItem('stork-helpers-cart', JSON.stringify(cart));
+                    updateCartCount();
+                    loadCart();
+                }
+            }
+        }
+
+        function loadCart() {
+            const cartContent = document.getElementById('cart-content');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="cart-empty" style="text-align: center; padding: 60px 0;">
+                        <i class="fas fa-shopping-cart" style="font-size: 4rem; color: var(--stone); margin-bottom: 20px;"></i>
+                        <h3 style="color: var(--dark-slate); margin-bottom: 15px;">Your cart is empty</h3>
+                        <p style="color: var(--text-light); margin-bottom: 30px;">Add some products from our shop to get started!</p>
+                        <a href="#shop" class="btn nav-link" data-page="shop">Browse Products</a>
+                    </div>
+                `;
+                cartTotal.style.display = 'none';
+                return;
+            }
+            
+            let html = '<div class="cart-items">';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-img" style="background-image: url('${item.image}');">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.type === 'digital' ? 'Digital Product' : 'Physical Product'}</p>
+                            <p class="product-price">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="cart-item-controls">
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <div style="text-align: right;">
+                                <p class="product-price">$${itemTotal.toFixed(2)}</p>
+                                <button class="btn btn-small btn-outline" onclick="removeFromCart(${item.id})" style="margin-top: 5px;">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            cartContent.innerHTML = html;
+            
+            // Update total section
+            const shipping = 5.99;
+            const total = subtotal + shipping;
+            
+            document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cart-shipping').textContent = `$${shipping.toFixed(2)}`;
+            document.getElementById('cart-total-amount').textContent = `$${total.toFixed(2)}`;
+            
+            cartTotal.style.display = 'block';
+        }
+
+        // ========== CHECKOUT FUNCTIONALITY ==========
+        function loadCheckout() {
+            const checkoutItems = document.getElementById('checkout-items');
+            let subtotal = 0;
+            let html = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                html += `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            
+            checkoutItems.innerHTML = html;
+            
+            const shipping = 5.99;
+            const total = subtotal + shipping;
+            
+            document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('checkout-shipping').textContent = `$${shipping.toFixed(2)}`;
+            document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // ========== DYNAMIC SIDEBAR ==========
+        function updateSidebar(category) {
+            const products = productData[category] || productData.all;
+            const sidebarContent = document.getElementById('sidebar-content');
+            sidebarContent.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'sidebar-product';
+                productElement.innerHTML = `
+                    <div class="product-img" style="background-image: url('${product.image}');">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.name}</h4>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <button class="btn add-to-cart" data-id="${product.id}" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 5px;">Add to Cart</button>
+                    </div>
+                `;
+                sidebarContent.appendChild(productElement);
+            });
+        }
+
+        function updateSidebarPage(category) {
+            const products = productData[category] || productData.all;
+            const sidebarContent = document.getElementById('sidebar-content-page');
+            sidebarContent.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'sidebar-product';
+                productElement.innerHTML = `
+                    <div class="product-img" style="background-image: url('${product.image}');">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.name}</h4>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <button class="btn add-to-cart" data-id="${product.id}" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 5px;">Add to Cart</button>
+                    </div>
+                `;
+                sidebarContent.appendChild(productElement);
+            });
+        }
+
+        // ========== SHOP PRODUCTS ==========
+        function loadShopProducts(category) {
+            const shopProductsContainer = document.getElementById('shop-products');
+            let filteredProducts = shopProducts;
+            
+            if (category !== 'all') {
+                filteredProducts = shopProducts.filter(product => 
+                    category === 'bundles' ? product.category === 'bundles' : 
+                    category === 'digital' ? product.type === 'digital' :
+                    category === 'physical' ? product.type === 'physical' :
+                    product.category === category
+                );
+            }
+            
+            let html = '';
+            filteredProducts.forEach(product => {
+                html += `
+                    <div class="shop-item">
+                        <div class="shop-item-img" style="background-image: url('${product.image}');">
+                            <i class="${product.icon}"></i>
+                        </div>
+                        <div class="shop-item-content">
+                            <span class="shop-item-type ${product.type}">${product.type === 'digital' ? 'Digital Toolkit' : 'Physical Product'}</span>
+                            <h4>${product.name}</h4>
+                            <p>${product.description}</p>
+                            <p class="product-price">$${product.price.toFixed(2)}</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button class="btn add-to-cart" data-id="${product.id}" style="flex: 1;">Add to Cart</button>
+                                <button class="btn btn-outline buy-now" data-id="${product.id}">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            shopProductsContainer.innerHTML = html;
+        }
+
+        // ========== BLOG FUNCTIONALITY ==========
+        let currentBlogPostIndex = 0;
+
+        function loadBlogPost(index) {
+            if (index < 0) index = blogPosts.length - 1;
+            if (index >= blogPosts.length) index = 0;
+            
+            currentBlogPostIndex = index;
+            const post = blogPosts[index];
+            
+            document.getElementById('blog-post-title').textContent = post.title;
+            document.getElementById('blog-post-category').textContent = post.category.charAt(0).toUpperCase() + post.category.slice(1);
+            document.getElementById('blog-post-content').innerHTML = `<p>${post.content}</p>`;
+            
+            // Update sidebar for this category
+            updateSidebarPage(post.category);
+            
+            // Update category tags
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.getAttribute('data-category') === post.category) {
+                    tag.classList.add('active');
+                }
+            });
+        }
+
+        function filterBlogPosts(category) {
+            if (category === 'all') {
+                loadBlogPost(0);
+            } else {
+                const postIndex = blogPosts.findIndex(post => post.category === category);
+                if (postIndex !== -1) {
+                    loadBlogPost(postIndex);
+                }
+            }
+        }
+
+        function navigateBlogPost(direction) {
+            loadBlogPost(currentBlogPostIndex + direction);
+        }
+
+        // ========== FAQ FUNCTIONALITY ==========
+        function loadFAQ() {
+            const faqList = document.getElementById('faq-list');
+            let html = '';
+            
+            faqData.forEach((faq, index) => {
+                html += `
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>${faq.question}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>${faq.answer}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            faqList.innerHTML = html;
+        }
+
+        function searchFAQs(query) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            const searchTerm = query.toLowerCase();
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // ========== CALENDAR FUNCTIONALITY ==========
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            
+            document.getElementById('current-month').textContent = `${monthNames[currentCalendarMonth]} ${currentCalendarYear}`;
+            
+            // Get first day of month
+            const firstDay = new Date(currentCalendarYear, currentCalendarMonth, 1).getDay();
+            // Get number of days in month
+            const daysInMonth = new Date(currentCalendarYear, currentCalendarMonth + 1, 0).getDate();
+            
+            let html = '';
+            
+            // Day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                html += `<div class="calendar-day header">${day}</div>`;
+            });
+            
+            // Empty cells before first day
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="calendar-day"></div>`;
+            }
+            
+            // Days of the month
+            const today = new Date();
+            const currentDay = today.getDate();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Generate random booked days for demo
+            const bookedDays = new Set();
+            for (let i = 0; i < 5; i++) {
+                bookedDays.add(Math.floor(Math.random() * daysInMonth) + 1);
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = (day === currentDay && currentMonth === currentCalendarMonth && currentYear === currentCalendarYear);
+                const isBooked = bookedDays.has(day);
+                const isPast = (currentYear > currentCalendarYear) || 
+                              (currentYear === currentCalendarYear && currentMonth > currentCalendarMonth) ||
+                              (currentYear === currentCalendarYear && currentMonth === currentCalendarMonth && day < currentDay);
+                
+                let className = 'calendar-day';
+                if (isBooked || isPast) {
+                    className += ' booked';
+                } else {
+                    className += ' available';
+                }
+                
+                html += `<div class="${className}" data-day="${day}">${day}${isToday ? '<br><small>Today</small>' : ''}</div>`;
+            }
+            
+            calendar.innerHTML = html;
+            
+            // Add click handlers for available days
+            document.querySelectorAll('.calendar-day.available').forEach(day => {
+                day.addEventListener('click', function() {
+                    const selectedDay = this.getAttribute('data-day');
+                    const dateStr = `${monthNames[currentCalendarMonth]} ${selectedDay}, ${currentCalendarYear}`;
+                    showSuccess('Date Selected', `You've selected ${dateStr} for a consultation. We'll contact you to confirm availability.`);
+                });
+            });
+        }
+
+        // ========== MODAL FUNCTIONALITY ==========
+        function openServiceModal(service) {
+            const details = serviceDetails[service];
+            if (!details) return;
+            
+            document.getElementById('modal-title').textContent = details.title;
+            document.getElementById('modal-body').innerHTML = details.content;
+            document.getElementById('service-modal').classList.add('active');
+            
+            // Add event listeners to buttons in modal
+            setTimeout(() => {
+                const bookBtn = document.getElementById('book-service-btn');
+                const subscribeBtn = document.getElementById('subscribe-now-btn');
+                const classesBtn = document.getElementById('view-classes-btn');
+                const placentaBtn = document.getElementById('learn-more-placenta-btn');
+                const planningBtn = document.getElementById('book-planning-btn');
+                const tubBtn = document.getElementById('rent-tub-btn');
+                
+                if (bookBtn) bookBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('contact');
+                });
+                
+                if (subscribeBtn) subscribeBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('subscription');
+                });
+                
+                if (classesBtn) classesBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('services');
+                });
+                
+                if (placentaBtn) placentaBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('contact');
+                });
+                
+                if (planningBtn) planningBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('contact');
+                });
+                
+                if (tubBtn) tubBtn.addEventListener('click', () => {
+                    closeAllModals();
+                    navigateToPage('contact');
+                });
+            }, 100);
+        }
+
+        function openSubscriptionModal(plan) {
+            let title = '';
+            let content = '';
+            
+            if (plan === 'monthly') {
+                title = 'Monthly Subscription';
+                content = `
+                    <p>You're subscribing to the Monthly Plan at <strong>$24.99/month</strong>.</p>
+                    <p>This includes:</p>
+                    <ul>
+                        <li>Full app access</li>
+                        <li>Weekly Q&A sessions with certified doulas</li>
+                        <li>Community forum access</li>
+                        <li>Monthly resource packs</li>
+                    </ul>
+                    <p>Your subscription will automatically renew each month. You can cancel anytime.</p>
+                    <button class="btn" id="confirm-subscription" style="width: 100%; margin-top: 20px;">Confirm Subscription</button>
+                `;
+            } else if (plan === 'annual') {
+                title = 'Annual Subscription';
+                content = `
+                    <p>You're subscribing to the Annual Plan at <strong>$249.99/year</strong> (save 16%).</p>
+                    <p>This includes:</p>
+                    <ul>
+                        <li>Full app access</li>
+                        <li>Weekly Q&A sessions with certified doulas</li>
+                        <li>Community forum access</li>
+                        <li>Monthly resource packs</li>
+                        <li>Annual bonus materials</li>
+                        <li>2 one-on-one consultations</li>
+                    </ul>
+                    <p>Your subscription will automatically renew each year. You can cancel anytime.</p>
+                    <button class="btn" id="confirm-subscription" style="width: 100%; margin-top: 20px;">Confirm Subscription</button>
+                `;
+            } else if (plan === 'lifetime') {
+                title = 'Lifetime Access';
+                content = `
+                    <p>You're purchasing Lifetime Access for <strong>$499.99</strong> (one-time payment).</p>
+                    <p>This includes:</p>
+                    <ul>
+                        <li>Permanent app access</li>
+                        <li>All future updates included</li>
+                        <li>Community forum access</li>
+                        <li>All resource packs</li>
+                        <li>5 one-on-one consultations</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p>You'll have access to the app and all future updates forever.</p>
+                    <button class="btn" id="confirm-subscription" style="width: 100%; margin-top: 20px;">Purchase Lifetime Access</button>
+                `;
+            }
+            
+            document.getElementById('subscription-modal-title').textContent = title;
+            document.getElementById('subscription-modal-body').innerHTML = content;
+            document.getElementById('subscription-modal').classList.add('active');
+            
+            setTimeout(() => {
+                document.getElementById('confirm-subscription')?.addEventListener('click', () => {
+                    closeAllModals();
+                    showSuccess('Subscription Confirmed', 'Thank you for your subscription! You now have access to the Stork Helpers app. Check your email for login instructions.');
+                });
+            }, 100);
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+
+        function showSuccess(title, message) {
+            document.getElementById('success-title').textContent = title;
+            document.getElementById('success-message').textContent = message;
+            document.getElementById('success-modal').classList.add('active');
+        }
+
+        // ========== INITIALIZE APPLICATION ==========
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Make functions available globally for inline event handlers
+        window.updateQuantity = updateQuantity;
+        window.removeFromCart = removeFromCart;
+    </script>
+</body>
+</html>
